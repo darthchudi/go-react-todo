@@ -1,0 +1,13 @@
+func createDB() {
+	// db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/todo")
+
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// defer db.Close()
+
+	// if err = db.Ping(); err != nil {
+	// 	log.Fatal(err)
+	// }
+
+}

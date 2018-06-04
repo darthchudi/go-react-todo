@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'HelveticaNeue-Bold';
+  src: 	url('fonts/HelveticaNeue-Bold.eot?#iefix') format('embedded-opentype'),  
+		url('fonts/HelveticaNeue-Bold.otf')  format('opentype'),
+     	url('fonts/HelveticaNeue-Bold.woff') format('woff'), 
+     	url('fonts/HelveticaNeue-Bold.ttf')  format('truetype'), 
+     	url('fonts/HelveticaNeue-Bold.svg#HelveticaNeue-Bold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'HelveticaNeue-Thin';
+  src: 	url('fonts/HelveticaNeue-Thin.eot?#iefix') format('embedded-opentype'),  
+		url('fonts/HelveticaNeue-Thin.otf')  format('opentype'),
+     	url('fonts/HelveticaNeue-Thin.woff') format('woff'), 
+     	url('fonts/HelveticaNeue-Thin.ttf')  format('truetype'), 
+     	url('fonts/HelveticaNeue-Thin.svg#HelveticaNeue-Thin') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.text-news-cycle{
+	font-family: 'HelveticaNeue-Thin';
+}
+
+.debug{
+	border: 2px solid gold;
+}
+
+.debug-child{
+	border: 2px solid red;
+}
+
+.nav-link{
+	color: black;
+}
+
+a.nav-link:hover{
+	color: black;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
+	background-color: pink;
+}

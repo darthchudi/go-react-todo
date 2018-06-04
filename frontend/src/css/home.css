@@ -1,0 +1,67 @@
+@font-face {
+  font-family: 'HelveticaNeue-Bold';
+  src: 	url('fonts/HelveticaNeue-Bold.eot?#iefix') format('embedded-opentype'),  
+		url('fonts/HelveticaNeue-Bold.otf')  format('opentype'),
+     	url('fonts/HelveticaNeue-Bold.woff') format('woff'), 
+     	url('fonts/HelveticaNeue-Bold.ttf')  format('truetype'), 
+     	url('fonts/HelveticaNeue-Bold.svg#HelveticaNeue-Bold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'HelveticaNeue-Thin';
+  src: 	url('fonts/HelveticaNeue-Thin.eot?#iefix') format('embedded-opentype'),  
+		url('fonts/HelveticaNeue-Thin.otf')  format('opentype'),
+     	url('fonts/HelveticaNeue-Thin.woff') format('woff'), 
+     	url('fonts/HelveticaNeue-Thin.ttf')  format('truetype'), 
+     	url('fonts/HelveticaNeue-Thin.svg#HelveticaNeue-Thin') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'News-Cycle';
+  src: 	 url('fonts/NewsCycle-Regular.otf')  format('opentype');
+  font-weight: lighter;
+  font-style: normal;
+}
+
+body{
+	overflow-x: hidden;
+}
+
+
+.navbar{
+	/*border-bottom: 1px solid #ECF0F1;*/
+	color: white;
+	padding-bottom: 0px;
+}
+
+.debug{
+	border: 2px solid gold;
+}
+
+.squigle{
+	background-color: #ffffff;
+	background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231c4c5d' fill-opacity='0.3'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.active{
+	border-bottom: 3.5px solid #a7cbd8;
+}
+
+h1.full-stack{
+	font-family: 'HelveticaNeue-Bold';
+	font-weight: lighter;
+	color: #252626;
+	line-height: 3.5rem;
+	font-size: 2.1rem;
+	margin-top: -1.5rem !important;
+}
+
+.person{
+	font-weight: lighter;
+	color: #3c3d3d;
+	font-size: 1.25rem;
+}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	_ "github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -36,6 +37,9 @@ func main() {
 
 	//Set Up Gin and Mount Routers
 	router := gin.Default()
+
+	//Serve the html file
+	// router.Use(static.Serve("/", static.LocalFile("/frontend/public", true)))
 
 	api := router.Group("/api")
 	{

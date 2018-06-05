@@ -43,3 +43,8 @@ a.nav-link:hover{
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link{
 	background-color: pink;
 }
+
+h1{
+  font-family: 'HelveticaNeue-Bold';
+  padding: 1rem 0rem;
+}

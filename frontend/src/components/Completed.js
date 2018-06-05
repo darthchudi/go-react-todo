@@ -3,6 +3,7 @@ import Nav from './Nav';
 const Completed = (props) => (
 	<div className="container">
 		<Nav active="Completed"/>
+		<h1 className="text-center"> {props.completedTodos.length} Completed Todos </h1>
 		<ul>
 			{
 				props.completedTodos.map( (todo, key) => 

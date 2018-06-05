@@ -49,6 +49,7 @@ func main() {
 		api.POST("/update/:id", UpdateTodo)
 		api.POST("/delete/:id", DeleteTodo)
 		api.POST("/complete/:id", CompleteTodo)
+
 	}
 
 	router.Run()
@@ -86,7 +87,7 @@ func FetchAllTodos(context *gin.Context) {
 		return
 	}
 
-	context.JSON(200, gin.H{"message": "successfully fetched todos", "allTodos": allTodos, "uncompletedTodos": uncompletedTodos, "completedTodos": uncompletedTodos})
+	context.JSON(200, gin.H{"message": "successfully fetched todos", "allTodos": allTodos, "uncompletedTodos": uncompletedTodos, "completedTodos": completedTodos})
 }
 
 func FetchTodo(context *gin.Context) {

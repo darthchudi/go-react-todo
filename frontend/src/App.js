@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import Nav from './components/Nav';
-import TodoForm from './components/TodoForm';
-import TodosContainer from './components/TodosContainer';
+import {HashRouter, Route} from 'react-router-dom';
 import axios from 'axios';
+import moment from 'moment';
+import Completed from './components/Completed';
+import UnCompleted from './components/Uncompleted';
+import TodoHome from './components/TodoHome';
 import './css/bootstrap/dist/css/bootstrap.min.css';
 import './css/todo.css';
 
@@ -13,6 +15,7 @@ class App extends Component {
 		this.createNewTodo = this.createNewTodo.bind(this)
 		this.completeTodo = this.completeTodo.bind(this)
 		this.deleteTodo = this.deleteTodo.bind(this)
+		this.parseDate = this.parseDate.bind(this)
 		this.state = {
 			newTodo : '',
 			positiveAlert: '',
@@ -20,6 +23,38 @@ class App extends Component {
 			uncompletedTodos: [],
 			completedTodos: []
 		}
+	}
+
+	componentDidMount(){
+		console.log("heyy")
+		axios.get("api/fetch")
+		.then(({data})=>{
+			var allTodos = data.allTodos
+			var completedTodos = data.completedTodos
+			var uncompletedTodos = data.uncompletedTodos
+
+			this.setState({
+				allTodos, completedTodos, uncompletedTodos
+			})
+		})
+		.catch((e)=>{
+			console.log(e)
+		})
+	}
+
+	descriptionStyle = {
+		borderLeft: "4px solid black",
+		fontFamily: "'HelveticaNeue-Bold'",
+		fontSize: "1.1rem"
+	}
+
+	dateStyle = {
+		fontSize: "0.8rem",
+		opacity: "0.6"
+	}
+
+	parseDate(date){
+		return moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
 	}
 
 	handleChange(e){
@@ -58,7 +93,6 @@ class App extends Component {
 
 	completeTodo(todo, e){
 		e.preventDefault();
-
 		axios.post(`/api/complete/${todo.ID}`)
 		.then(({data})=>{
 			var completedTodos = data.completedTodos.reverse()
@@ -74,7 +108,6 @@ class App extends Component {
 
 	deleteTodo(todo, e){
 		e.preventDefault();
-		
 		axios.post(`/api/delete/${todo.ID}`)
 		.then(({data})=>{
 			var completedTodos = data.completedTodos.reverse()
@@ -86,30 +119,33 @@ class App extends Component {
 		});
 	}
 
-	componentDidMount(){
-		console.log("heyy")
-		axios.get("api/fetch")
-		.then(({data})=>{
-			var allTodos = data.allTodos
-			var completedTodos = data.completedTodos
-			var uncompletedTodos = data.uncompletedTodos
-
-			this.setState({
-				allTodos, completedTodos, uncompletedTodos
-			})
-		})
-		.catch((e)=>{
-			console.log(e)
-		})
-	}
-
 	render() {
 		return (
-		  <div className="container">
-			<Nav/>
-			<TodoForm handleChange={this.handleChange} newTodo={this.state.newTodo} createNewTodo={this.createNewTodo}/>
-			<TodosContainer todos={this.state.uncompletedTodos} completeTodo={this.completeTodo} deleteTodo={this.deleteTodo}/>
-		  </div>
+			<HashRouter>
+				<div>
+					
+					<Route 
+						exact path="/" 
+						render={ 
+							() => <TodoHome handleChange={this.handleChange} newTodo={this.state.newTodo} createNewTodo={this.createNewTodo} todos={this.state.uncompletedTodos} completeTodo={this.completeTodo} deleteTodo={this.deleteTodo} /> 
+						}
+					/>
+
+					<Route
+						exact path="/completed"
+						render= {
+							() => <Completed completedTodos={this.state.completedTodos} descriptionStyle={this.descriptionStyle} dateStyle={this.dateStyle} parseDate={this.parseDate} deleteTodo={this.deleteTodo}/>
+						}
+					/>
+
+					<Route
+						exact path="/uncompleted"
+						render= {
+							() => <UnCompleted uncompletedTodos={this.state.uncompletedTodos} descriptionStyle={this.descriptionStyle} dateStyle={this.dateStyle} parseDate={this.parseDate} completeTodo={this.completeTodo}  deleteTodo={this.deleteTodo}/>
+						}
+					/>
+				</div>
+			</HashRouter>
 		);
 	}
 }

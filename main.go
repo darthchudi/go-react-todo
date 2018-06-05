@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	_ "fmt"
 	_ "github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -56,19 +56,37 @@ func main() {
 
 func CreateTodo(context *gin.Context) {
 	var todo TodoModel
+	var allTodos []TodoModel
+	var uncompletedTodos []TodoModel
+
+	//Bind the todo from the form and create the todos
 	context.ShouldBind(&todo)
 	db.Create(&todo)
-	context.JSON(200, gin.H{"message": "successfully fetched todo", "todo": todo})
+
+	//Find all the todos
+	db.Find(&allTodos)
+
+	//Find uncompleted Todos
+	db.Where("completed = ?", false).Find(&uncompletedTodos)
+
+	context.JSON(200, gin.H{"message": "successfully created todo", "todo": todo, "allTodos": allTodos, "uncompletedTodos": uncompletedTodos})
 }
 
 func FetchAllTodos(context *gin.Context) {
-	var todos []TodoModel
-	db.Find(&todos)
-	if len(todos) <= 0 {
+	var allTodos []TodoModel
+	var completedTodos []TodoModel
+	var uncompletedTodos []TodoModel
+
+	db.Find(&allTodos)
+	db.Where("completed = ?", true).Find(&completedTodos)
+	db.Where("completed = ?", false).Find(&uncompletedTodos)
+
+	if len(allTodos) <= 0 {
 		context.JSON(404, gin.H{"message": "No todos found"})
 		return
 	}
-	context.JSON(200, gin.H{"message": "successfully fetched todos", "todos": todos})
+
+	context.JSON(200, gin.H{"message": "successfully fetched todos", "allTodos": allTodos, "uncompletedTodos": uncompletedTodos, "completedTodos": uncompletedTodos})
 }
 
 func FetchTodo(context *gin.Context) {
@@ -102,6 +120,10 @@ func UpdateTodo(context *gin.Context) {
 
 func DeleteTodo(context *gin.Context) {
 	var todo TodoModel
+	var allTodos []TodoModel
+	var uncompletedTodos []TodoModel
+	var completedTodos []TodoModel
+
 	id := context.Param("id")
 	db.Find(&todo, id)
 
@@ -112,13 +134,19 @@ func DeleteTodo(context *gin.Context) {
 
 	db.Delete(&todo)
 
-	fmt.Println(todo)
+	db.Where("completed = ?", true).Find(&completedTodos)
+	db.Where("completed = ?", false).Find(&uncompletedTodos)
+	db.Find(&allTodos)
 
-	context.JSON(200, gin.H{"message": "Successfully deleted Todo", "todo": todo})
+	context.JSON(200, gin.H{"message": "Successfully deleted Todo", "todo": todo, "allTodos": allTodos, "completedTodos": completedTodos, "uncompletedTodos": uncompletedTodos})
 }
 
 func CompleteTodo(context *gin.Context) {
 	var todo TodoModel
+	var uncompletedTodos []TodoModel
+	var completedTodos []TodoModel
+
+	//Find Todo
 	id := context.Param("id")
 	db.Find(&todo, id)
 
@@ -127,8 +155,10 @@ func CompleteTodo(context *gin.Context) {
 		return
 	}
 
+	//Update Todo
 	db.Model(&todo).Update("completed", true)
+	db.Where("completed = ?", true).Find(&completedTodos)
+	db.Where("completed = ?", false).Find(&uncompletedTodos)
 
-	context.JSON(200, gin.H{"message": "Successfully marked Todo as Complete", "todo": todo})
-
+	context.JSON(200, gin.H{"message": "Successfully marked Todo as Complete", "todo": todo, "completedTodos": completedTodos, "uncompletedTodos": uncompletedTodos})
 }
